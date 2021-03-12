@@ -105,6 +105,7 @@ class GeneralModel extends CI_Model
 		return array(
 			"result" . $this->getTablename() => array(
 				"result" => $data,
+				"result_query" => $this->db->last_query(),
 				"response_code" => $response_code,
 				"error" => $error
 			)

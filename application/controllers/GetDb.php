@@ -41,4 +41,41 @@ class GetDb extends CI_Controller{
 
 	}
 
+	public function getCityfromDb(){
+		$json_contents = file_get_contents("php://input");
+		$contents = json_decode($json_contents,true);
+		$is_numeric = null;
+		if(!is_array($contents)){
+			$rulesforquery = array();
+		} else{
+			$rulesforquery = $contents;
+			$is_numeric = $rulesforquery["is_numeric"];
+			unset($rulesforquery["is_numeric"]);
+		}
+
+		$resultfromDB = $this->GeneralModel->getResultfromDB($rulesforquery,"city",$is_numeric);
+
+
+		echo json_encode($resultfromDB);
+	}
+
+	public function getDistrictfromDb(){
+		$json_contents = file_get_contents("php://input");
+		$contents = json_decode($json_contents,true);
+		$is_numeric = null;
+		if(!is_array($contents)){
+			$rulesforquery = array();
+		} else{
+			$rulesforquery = $contents;
+			$is_numeric = $rulesforquery["is_numeric"];
+			unset($rulesforquery["is_numeric"]);
+		}
+
+		$resultfromDB = $this->GeneralModel->getResultfromDB($rulesforquery,"district",$is_numeric);
+
+
+		echo json_encode($resultfromDB);
+	}
+
+
 }
