@@ -36,9 +36,7 @@ class GetDb extends CI_Controller{
 
 		$resultfromDB = $this->GeneralModel->getResultfromDB($rulesforquery,"cargo",$is_numeric);
 
-
 		echo json_encode($resultfromDB);
-
 	}
 
 	public function getCityfromDb(){
@@ -77,5 +75,20 @@ class GetDb extends CI_Controller{
 		echo json_encode($resultfromDB);
 	}
 
+	public function getVehiclefromDb(){
+		$json_contents = file_get_contents("php://input");
+		$contents = json_decode($json_contents,true);
+		$is_numeric = null;
+		if(!is_array($contents)){
+			$rulesforquery = array();
+		} else{
+			$rulesforquery = $contents;
+			$is_numeric = $rulesforquery["is_numeric"];
+			unset($rulesforquery["is_numeric"]);
+		}
 
+		$resultfromDB = $this->GeneralModel->getResultfromDB($rulesforquery,"vehicle",$is_numeric);
+
+		echo json_encode($resultfromDB);
+	}
 }
