@@ -18,7 +18,11 @@ class GeneralModel extends CI_Model
 	private function executeQueryandgetResult($rulesforquery, $is_numeric)
 	{
 		if(!array_key_exists("insert",$rulesforquery) || !array_key_exists("update",$rulesforquery)){
-			$executed_query = $this->db->select("*")->from($this->getTablename());
+			if(array_key_exists("select",$rulesforquery)){
+				$executed_query = $this->db->select($rulesforquery["select"])->from($this->getTablename());
+			} else {
+				$executed_query = $this->db->select("*")->from($this->getTablename());
+			}
 		}
 		if(array_key_exists("join_type",$rulesforquery)){
 			$join_type = $rulesforquery["join_type"];
