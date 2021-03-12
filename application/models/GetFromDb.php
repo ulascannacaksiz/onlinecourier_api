@@ -15,9 +15,9 @@ class GetFromDb extends CI_Model{
 	public function getCargofromDb($contents_arr)
 	{
 		$return = null;
-		$result = $this->db->get('cargo')->result();
+		$result = $this->db->get('cargo');
 		if($result->num_rows() > 0){
-			$return = $this->returnResult(200,$return,null);
+			$return = $this->returnResult(200,$result->result(),null);
 		} else {
 			$return = $this->returnResult(404,null,"Not Found");
 		}

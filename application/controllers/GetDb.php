@@ -4,6 +4,7 @@ class GetDb extends CI_Controller{
 	{
 		parent::__construct();
 		$this->load->model("GetFromDb");
+		$this->load->model("GeneralModel");
 	}
 
 	public function getUserfromDB()
@@ -11,10 +12,12 @@ class GetDb extends CI_Controller{
 		$json_contents = file_get_contents("php://input");
 		$contents = json_decode($json_contents,true);
 		if(!is_array($contents)){
-			$contents = array();
+			$rulesforquery = array();
+		} else{
+			$rulesforquery = $contents;
 		}
 		$resultfromDB = $this->GetFromDb->getUserfromDB($contents);
-		return $resultfromDB;
+		echo json_encode($resultfromDB);
 
 	}
 
@@ -22,11 +25,20 @@ class GetDb extends CI_Controller{
 	{
 		$json_contents = file_get_contents("php://input");
 		$contents = json_decode($json_contents,true);
+		$is_numeric = null;
 		if(!is_array($contents)){
-			$contents = array();
+			$rulesforquery = array();
+		} else{
+			$rulesforquery = $contents;
+			$is_numeric = $rulesforquery["is_numeric"];
+			unset($rulesforquery["is_numeric"]);
 		}
-		$resultfromDB = $this->GetFromDb->getCargofromDb($contents);
-		return $resultfromDB;
+
+		$resultfromDB = $this->GeneralModel->getResultfromDB($rulesforquery,"cargo",$is_numeric);
+
+
+		echo json_encode($resultfromDB);
 
 	}
+
 }
