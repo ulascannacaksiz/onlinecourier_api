@@ -12,7 +12,7 @@ class SaveToDb extends CI_Model
 		$return = null;
 		if (array_key_exists("user_name", $contents_arr) && array_key_exists("user_surname", $contents_arr)
 			&& array_key_exists("user_email", $contents_arr) && array_key_exists("user_password", $contents_arr)
-			&& array_key_exists("user_address", $contents_arr) && array_key_exists("user_phonenum", $contents_arr)
+			&& array_key_exists("user_address", $contents_arr) && array_key_exists("user_phone_num", $contents_arr)
 			&& array_key_exists("user_created_time", $contents_arr)) {
 			if (trim($contents_arr["user_name"]) != "" && trim($contents_arr["user_surname"]) != ""
 				&& trim($contents_arr["user_email"]) != "" && trim($contents_arr["user_password"]) != ""
@@ -88,6 +88,7 @@ class SaveToDb extends CI_Model
 		}
 		return $return;
 	}
+	
 
 	private function returnResult($http_status_code, $result_data, $error)
 	{

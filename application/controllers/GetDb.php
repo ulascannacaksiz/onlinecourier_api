@@ -7,20 +7,6 @@ class GetDb extends CI_Controller{
 		$this->load->model("GeneralModel");
 	}
 
-	public function getUserfromDB()
-	{
-		$json_contents = file_get_contents("php://input");
-		$contents = json_decode($json_contents,true);
-		if(!is_array($contents)){
-			$rulesforquery = array();
-		} else{
-			$rulesforquery = $contents;
-		}
-		$resultfromDB = $this->GetFromDb->getUserfromDB($contents);
-		echo json_encode($resultfromDB);
-
-	}
-
 	public function getCargofromDb()
 	{
 		$json_contents = file_get_contents("php://input");
@@ -28,12 +14,13 @@ class GetDb extends CI_Controller{
 		$is_numeric = null;
 		if(!is_array($contents)){
 			$rulesforquery = array();
-		} else{
+		} else {
 			$rulesforquery = $contents;
-			$is_numeric = $rulesforquery["is_numeric"];
-			unset($rulesforquery["is_numeric"]);
+			if (isset($rulesforquery["is_numeric"])) {
+				$is_numeric = $rulesforquery["is_numeric"];
+				unset($rulesforquery["is_numeric"]);
+			}
 		}
-
 		$resultfromDB = $this->GeneralModel->getResultfromDB($rulesforquery,"cargo",$is_numeric);
 
 		echo json_encode($resultfromDB);
@@ -47,8 +34,10 @@ class GetDb extends CI_Controller{
 			$rulesforquery = array();
 		} else{
 			$rulesforquery = $contents;
-			$is_numeric = $rulesforquery["is_numeric"];
-			unset($rulesforquery["is_numeric"]);
+			if (isset($rulesforquery["is_numeric"])) {
+				$is_numeric = $rulesforquery["is_numeric"];
+				unset($rulesforquery["is_numeric"]);
+			}
 		}
 
 		$resultfromDB = $this->GeneralModel->getResultfromDB($rulesforquery,"city",$is_numeric);
@@ -65,8 +54,10 @@ class GetDb extends CI_Controller{
 			$rulesforquery = array();
 		} else{
 			$rulesforquery = $contents;
-			$is_numeric = $rulesforquery["is_numeric"];
-			unset($rulesforquery["is_numeric"]);
+			if (isset($rulesforquery["is_numeric"])) {
+				$is_numeric = $rulesforquery["is_numeric"];
+				unset($rulesforquery["is_numeric"]);
+			}
 		}
 
 		$resultfromDB = $this->GeneralModel->getResultfromDB($rulesforquery,"district",$is_numeric);
@@ -83,11 +74,32 @@ class GetDb extends CI_Controller{
 			$rulesforquery = array();
 		} else{
 			$rulesforquery = $contents;
-			$is_numeric = $rulesforquery["is_numeric"];
-			unset($rulesforquery["is_numeric"]);
+			if (isset($rulesforquery["is_numeric"])) {
+				$is_numeric = $rulesforquery["is_numeric"];
+				unset($rulesforquery["is_numeric"]);
+			}
 		}
 
 		$resultfromDB = $this->GeneralModel->getResultfromDB($rulesforquery,"vehicle",$is_numeric);
+
+		echo json_encode($resultfromDB);
+	}
+
+	public function getUserfromDb(){
+		$json_contents = file_get_contents("php://input");
+		$contents = json_decode($json_contents,true);
+		$is_numeric = null;
+		if(!is_array($contents)){
+			$rulesforquery = array();
+		} else{
+			$rulesforquery = $contents;
+			if (isset($rulesforquery["is_numeric"])) {
+				$is_numeric = $rulesforquery["is_numeric"];
+				unset($rulesforquery["is_numeric"]);
+			}
+		}
+
+		$resultfromDB = $this->GeneralModel->getResultfromDB($rulesforquery,"user",$is_numeric);
 
 		echo json_encode($resultfromDB);
 	}
